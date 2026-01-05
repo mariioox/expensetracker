@@ -1,4 +1,5 @@
 import type { Transaction } from "../types/Transaction";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
 type Props = {
   transactions: Transaction[];
@@ -17,24 +18,23 @@ function Summary({ transactions }: Props) {
 
   return (
     <div>
-      <h2 className="font-bold m-1">Summary</h2>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          marginBottom: "1rem",
-        }}
-      >
-        <div>
-          <strong style={{ color: "green" }}>Income:</strong> ${income}
-        </div>
-        <div>
-          <strong style={{ color: "red" }}>Expense:</strong> ${expense}
-        </div>
-        <div>
-          <strong>Balance:</strong> ${balance}
-        </div>
-      </div>
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-2xl">Summary</CardTitle>
+        </CardHeader>
+
+        <CardContent className="grid grid-cols-3">
+          <div>
+            <strong style={{ color: "green" }}>Income:</strong> ${income}
+          </div>
+          <div>
+            <strong style={{ color: "red" }}>Expense:</strong> ${expense}
+          </div>
+          <div>
+            <strong>Balance:</strong> ${balance}
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }

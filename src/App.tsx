@@ -5,6 +5,14 @@ import type { StoredTransaction } from "./types/StoredTransaction";
 import Summary from "./components/Summary";
 import AddTransactionForm from "./components/AddTransactionForm";
 import TransactionList from "./components/TransactionList";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 function App() {
   const STORAGE_KEY = "transactions";
@@ -74,54 +82,84 @@ function App() {
   };
 
   return (
-    <>
-      <h1 className="font-bold m-5">Expense Tracker</h1>
-      <AddTransactionForm
-        onAddTransaction={addTransaction}
-        onUpdateTransaction={updateTransaction}
-        editingTransaction={editingTransaction}
-        clearEditing={() => setEditingTransaction(null)}
-      />
-      <h2 className="font-bold mt-10 mb-2">Transactions</h2>
-      <div className="flex justify-end">
-        <h2>Filter: </h2>
-        <select
-          className="border border-black ml-2 rounded-md p-1"
-          value={typeFilter}
-          onChange={(e) =>
-            setTypeFilter(e.target.value as "all" | "Income" | "Expense")
-          }
-        >
-          <option value="all">All</option>
-          <option value="Income">Income</option>
-          <option value="Expense">Expense</option>
-        </select>
+    <main className="min-h-screen bg-background p-6">
+      <div className="mx-auto max-w-3xl space-y-6">
+        <h1 className="text-4xl font-bold tracking-tight">Expense Tracker</h1>
+        <AddTransactionForm
+          onAddTransaction={addTransaction}
+          onUpdateTransaction={updateTransaction}
+          editingTransaction={editingTransaction}
+          clearEditing={() => setEditingTransaction(null)}
+        />
 
-        <select
-          className="border border-black ml-2 rounded-md p-1"
-          value={categoryFilter}
-          onChange={(e) =>
-            setCategoryFilter(e.target.value as "all" | Transaction["category"])
-          }
-        >
-          <option value="all">All Categories</option>
-          <option value="Food">Food</option>
-          <option value="Transport">Transport</option>
-          <option value="Bills">Bills</option>
-          <option value="Entertainment">Entertainment</option>
-          <option value="Other">Other</option>
-        </select>
-      </div>
+        <Card>
+          <CardHeader>
+            <CardTitle>
+              <h2 className="font-bold text-2xl mb-5">Transactions</h2>
 
-      <TransactionList
-        transactions={filteredTransactions}
-        onDeleteTransaction={deleteTransaction}
-        onEditTransaction={setEditingTransaction}
-      />
-      <div className="mt-10">
-        <Summary transactions={transactions} />
+              <div className="flex">
+                <div className="flex items-center gap-2 m-2">
+                  <span>Filter:</span>
+                  <Select
+                    value={typeFilter}
+                    onValueChange={(value) =>
+                      setTypeFilter(value as "all" | Transaction["type"])
+                    }
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All</SelectItem>
+                      <SelectItem value="Expense">Expense</SelectItem>
+                      <SelectItem value="Income">Income</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="flex items-center gap-2 m-2">
+                  <span>Category:</span>
+                  <Select
+                    value={categoryFilter}
+                    onValueChange={(value) =>
+                      setCategoryFilter(
+                        value as "all" | Transaction["category"]
+                      )
+                    }
+                  >
+                    <SelectTrigger className="w-[180px]">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All</SelectItem>
+                      <SelectItem value="Food">Food</SelectItem>
+                      <SelectItem value="Transport">Transport</SelectItem>
+                      <SelectItem value="Bills">Bills</SelectItem>
+                      <SelectItem value="Entertainment">
+                        Entertainment
+                      </SelectItem>
+                      <SelectItem value="Other">Other</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div>
+              <TransactionList
+                transactions={filteredTransactions}
+                onDeleteTransaction={deleteTransaction}
+                onEditTransaction={setEditingTransaction}
+              />
+            </div>
+          </CardContent>
+        </Card>
+
+        <div className="mt-10">
+          <Summary transactions={transactions} />
+        </div>
       </div>
-    </>
+    </main>
   );
 }
 

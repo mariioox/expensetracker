@@ -5,6 +5,17 @@ import type {
   TransactionType,
 } from "../types/Transaction";
 
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
 type Props = {
   onAddTransaction: (transaction: Transaction) => void;
   onUpdateTransaction: (transaction: Transaction) => void;
@@ -66,54 +77,79 @@ function AddTransactionForm({
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2 className="font-bold m-1">Add Transaction</h2>
+    <Card>
+      <CardHeader>
+        <CardTitle className="text-2xl">
+          {editingTransaction ? "Edit transaction" : "Add transaction"}
+        </CardTitle>
+      </CardHeader>
 
-      <div className="m-2">
-        <label>Title:</label>
-        <input
-          className="border border-black ml-2 rounded-md"
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-      </div>
+      <CardContent>
+        <form className="space-y-4" onSubmit={handleSubmit}>
+          <div className="flex">
+            <label className="self-center m-2">Title:</label>
+            <Input
+              placeholder="Title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+          </div>
 
-      <div className="m-2">
-        <label>Amount:</label>
-        <input
-          className="border border-black ml-2 rounded-md"
-          type="number"
-          value={amount}
-          onChange={(e) => setAmount(e.target.value)}
-        />
-      </div>
+          <div className="flex">
+            <label className="self-center m-2">Amount:</label>
+            <Input
+              type="number"
+              placeholder="Amount"
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
+            />
+          </div>
 
-      <select
-        className="border border-black ml-2 rounded-md p-1"
-        value={category}
-        onChange={(e) => setCategory(e.target.value as Category)}
-      >
-        <option value="Food">Food</option>
-        <option value="Transport">Transport</option>
-        <option value="Bills">Bills</option>
-        <option value="Entertainment">Entertainment</option>
-        <option value="Other">Other</option>
-      </select>
+          <div className="flex items-center gap-2">
+            <label>Category:</label>
 
-      <select
-        className="border border-black ml-2 rounded-md p-1"
-        value={type}
-        onChange={(e) => setType(e.target.value as TransactionType)}
-      >
-        <option value="Expense">Expense</option>
-        <option value="Income">Income</option>
-      </select>
+            <Select
+              value={category}
+              onValueChange={(value) => setCategory(value as Category)}
+            >
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Select category" />
+              </SelectTrigger>
 
-      <button className="border ml-2" type="submit">
-        Add
-      </button>
-    </form>
+              <SelectContent>
+                <SelectItem value="Food">Food</SelectItem>
+                <SelectItem value="Transport">Transport</SelectItem>
+                <SelectItem value="Bills">Bills</SelectItem>
+                <SelectItem value="Entertainment">Entertainment</SelectItem>
+                <SelectItem value="Other">Other</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <label>Type:</label>
+
+            <Select
+              value={type}
+              onValueChange={(value) => setType(value as TransactionType)}
+            >
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Select type" />
+              </SelectTrigger>
+
+              <SelectContent>
+                <SelectItem value="Expense">Expense</SelectItem>
+                <SelectItem value="Income">Income</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <Button type="submit" className="w-full">
+            {editingTransaction ? "Update transaction" : "Add transaction"}
+          </Button>
+        </form>
+      </CardContent>
+    </Card>
   );
 }
 

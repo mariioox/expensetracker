@@ -80,7 +80,7 @@ function AddTransactionForm({
     <Card>
       <CardHeader>
         <CardTitle className="text-2xl">
-          {editingTransaction ? "Edit transaction" : "Add transaction"}
+          {editingTransaction ? "Edit Transaction" : "Add Transaction"}
         </CardTitle>
       </CardHeader>
 

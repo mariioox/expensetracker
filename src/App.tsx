@@ -85,13 +85,15 @@ function App() {
     <main className="min-h-screen bg-background p-6">
       <div className="mx-auto max-w-3xl space-y-6">
         <h1 className="text-4xl font-bold tracking-tight">Expense Tracker</h1>
+        <div className="mt-10">
+          <Summary transactions={transactions} />
+        </div>
         <AddTransactionForm
           onAddTransaction={addTransaction}
           onUpdateTransaction={updateTransaction}
           editingTransaction={editingTransaction}
           clearEditing={() => setEditingTransaction(null)}
         />
-
         <Card>
           <CardHeader>
             <CardTitle>
@@ -154,10 +156,6 @@ function App() {
             </div>
           </CardContent>
         </Card>
-
-        <div className="mt-10">
-          <Summary transactions={transactions} />
-        </div>
       </div>
     </main>
   );

@@ -6,6 +6,7 @@ type Props = {
 };
 
 function Summary({ transactions }: Props) {
+  // Filter transactions
   const income = transactions
     .filter((transaction) => transaction.type === "Income")
     .reduce((sum, transaction) => sum + transaction.amount, 0);

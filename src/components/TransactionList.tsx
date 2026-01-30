@@ -9,6 +9,7 @@ type Props = {
   onEditTransaction: (transaction: Transaction) => void;
 };
 
+//
 function TransactionList({
   transactions,
   onDeleteTransaction,
